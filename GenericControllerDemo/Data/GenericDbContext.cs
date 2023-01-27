@@ -10,7 +10,7 @@ public class GenericDbContext : DbContext
 
     public DbSet<Something> Somethings { get; set; }
     public DbSet<SomeOtherThing> OtherThing { get; set; }
-    
+    public DbSet<AnotherShittyClass> AnotherShittyClasses { get; set; }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         if (!optionsBuilder.IsConfigured)

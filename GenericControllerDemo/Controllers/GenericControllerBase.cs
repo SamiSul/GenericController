@@ -1,18 +1,17 @@
 using GenericControllerDemo.Data;
 using GenericControllerDemo.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace GenericControllerDemo.Controllers;
 
 [Route("api/[controller]")]
 [Produces("application/json")]
-public class GenericController<T, TEntityId> : Controller
-    where T : class,
-    IObjectBase
+public abstract class GenericControllerBase<T, TEntityId> : Controller where T : class, IObjectBase
 {
-    private readonly GenericDbContext db;
+    private readonly DbContext db;
 
-    public GenericController(GenericDbContext context)
+    protected GenericControllerBase(DbContext context)
     {
         db = context;
     }
@@ -43,7 +42,7 @@ public class GenericController<T, TEntityId> : Controller
             await db.SaveChangesAsync();
 
             // respond with the newly created record
-            return CreatedAtAction("GetById", new { id = record.Id }, record);
+            return NoContent();
         }
         catch (Exception ex)
         {
@@ -75,7 +74,7 @@ public class GenericController<T, TEntityId> : Controller
         try
         {
             if (!ModelState.IsValid) return BadRequest();
-            
+
             var record = GetById(id);
             db.Remove(record);
             await db.SaveChangesAsync();
