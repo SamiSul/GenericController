@@ -9,11 +9,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddDbContext<GenericDbContext>(options => options.UseInMemoryDatabase("GenericControllerDemo"));
 
-builder.Services.AddMvc(o =>
-        o.Conventions.Add(new GenericControllerRouteConvention()))
-    .ConfigureApplicationPartManager(m => m.FeatureProviders.Add(
-        new GenericTypeControllerFeatureProvider(new[] {  Assembly.GetEntryAssembly().FullName}))
-    );
+var mvcBuilder = builder.Services.AddMvc(options => options.Conventions.Add(new GenericControllerRouteConvention()));
+
+var extendedMvcBuilder = mvcBuilder.ConfigureApplicationPartManager(applicationPartManager =>
+    applicationPartManager.FeatureProviders.Add(
+        new GenericTypeControllerFeatureProvider(new[] { Assembly.GetEntryAssembly().FullName })));
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

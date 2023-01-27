@@ -5,7 +5,6 @@ namespace GenericControllerDemo.Tools;
 
 /// <summary>
 ///    Applies route conventions to allow routes for auto generated controllers
-///    One of the main pieces to make the magic work.
 /// </summary>
 public class GenericControllerRouteConvention : IControllerModelConvention
 {

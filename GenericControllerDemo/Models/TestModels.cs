@@ -15,3 +15,8 @@ public class SomeOtherThing : IObjectBase
     public string Description { get; set; }
     public string TheThing = "TheOtherThing";
 }
+
+public class AnotherShittyClass : IObjectBase
+{
+    public Guid Id { get; set; }
+}
