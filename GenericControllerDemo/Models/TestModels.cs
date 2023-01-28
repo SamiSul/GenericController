@@ -1,3 +1,5 @@
+using GenericController;
+
 namespace GenericControllerDemo.Models;
 
 public class Some : IObjectBase

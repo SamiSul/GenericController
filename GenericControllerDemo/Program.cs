@@ -1,7 +1,8 @@
 using System.Reflection;
 using System.Text.Json.Serialization;
+using GenericController.Extensions;
+using GenericController.Utils;
 using GenericControllerDemo.Data;
-using GenericControllerDemo.Tools;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,11 +14,7 @@ builder.Services.AddControllers().AddJsonOptions(x =>
 
 builder.Services.AddDbContext<GenericDbContext>(options => options.UseInMemoryDatabase("GenericControllerDemo"));
 
-var mvcBuilder = builder.Services.AddMvc(options => options.Conventions.Add(new GenericControllerRouteConvention()));
-
-var extendedMvcBuilder = mvcBuilder.ConfigureApplicationPartManager(applicationPartManager =>
-    applicationPartManager.FeatureProviders.Add(
-        new GenericTypeControllerFeatureProvider(new[] { Assembly.GetEntryAssembly().FullName })));
+builder.Services.AddGenericController();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

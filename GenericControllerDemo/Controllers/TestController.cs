@@ -1,6 +1,5 @@
-using Microsoft.AspNetCore.Authorization;
+using GenericController;
 using GenericControllerDemo.Data;
-using GenericControllerDemo.Models;
 
 namespace GenericControllerDemo.Controllers;
 

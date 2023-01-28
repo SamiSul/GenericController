@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 
-namespace GenericControllerDemo.Tools;
+namespace GenericController.Utils;
 
 /// <summary>
 ///    Applies route conventions to allow routes for auto generated controllers

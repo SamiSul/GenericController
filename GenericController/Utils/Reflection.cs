@@ -1,4 +1,4 @@
-namespace GenericControllerDemo.Helpers;
+namespace GenericController.Utils;
 
 public static class Reflection
 {

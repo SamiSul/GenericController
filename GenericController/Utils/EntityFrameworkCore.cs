@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace GenericControllerDemo.Helpers;
+namespace GenericController.Utils;
 
 public static class EntityFrameworkCore<TEntity> where TEntity : class
 {

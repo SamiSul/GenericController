@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace GenericControllerDemo.Models;
+namespace GenericController;
 
 public interface IObjectBase
 {
