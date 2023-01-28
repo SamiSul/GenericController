@@ -4,7 +4,6 @@ using GenericControllerDemo.Helpers;
 using GenericControllerDemo.Models;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.AspNetCore.Mvc.Controllers;
-using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace GenericControllerDemo.Tools;
 
@@ -18,12 +17,12 @@ public class GenericTypeControllerFeatureProvider : IApplicationFeatureProvider<
 
     public GenericTypeControllerFeatureProvider(string[] assemblies)
     {
-        this.Assemblies = assemblies;
+        Assemblies = assemblies;
     }
 
     public void PopulateFeature(IEnumerable<ApplicationPart> parts, ControllerFeature feature)
     {
-        foreach (var assembly in this.Assemblies)
+        foreach (var assembly in Assemblies)
         {
             var loadedAssembly = Assembly.Load(assembly);
             var customClasses = loadedAssembly.GetExportedTypes().Where(type =>
@@ -34,8 +33,8 @@ public class GenericTypeControllerFeatureProvider : IApplicationFeatureProvider<
                 Reflection.IsSubclassOfRawGeneric(typeof(GenericControllerBase<,>), type)
             );
 
-            if(inheritedController is null) continue;
-            
+            if (inheritedController is null) continue;
+
             foreach (var candidate in customClasses)
             {
                 // Ignore BaseController itself

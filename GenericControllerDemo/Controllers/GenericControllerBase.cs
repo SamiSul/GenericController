@@ -1,4 +1,4 @@
-using GenericControllerDemo.Data;
+using GenericControllerDemo.Helpers;
 using GenericControllerDemo.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -17,31 +17,42 @@ public abstract class GenericControllerBase<T, TEntityId> : Controller where T :
     }
 
     [HttpGet]
-    public IQueryable<T> Get()
+    public virtual async Task<IEnumerable<T>> Get(CancellationToken cancellationToken,
+        [FromQuery] string entitiesToInclude = null)
     {
-        return db.Set<T>();
+        var queryableSet = db.Set<T>().AsQueryable();
+        if (entitiesToInclude is not null)
+        {
+            queryableSet = EntityFrameworkCore<T>.GenerateQueryWithInclude(queryableSet, entitiesToInclude);
+        }
+
+        return await queryableSet.ToListAsync(cancellationToken);
     }
 
     [HttpGet("{id}")]
-    public T GetById(TEntityId id)
+    public virtual async Task<T?> GetById(TEntityId id, CancellationToken cancellationToken,
+        [FromQuery] string entitiesToInclude = null)
     {
-        return Get().SingleOrDefault(e => e.Id.ToString() == id.ToString());
+        var queryableSet = db.Set<T>().AsQueryable();
+        if (entitiesToInclude is not null)
+        {
+            queryableSet = EntityFrameworkCore<T>.GenerateQueryWithInclude(queryableSet, entitiesToInclude);
+        }
+
+        return await queryableSet.FirstOrDefaultAsync(e => e.Id.ToString() == id.ToString(), cancellationToken);
     }
 
 
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] T record)
+    public virtual async Task<IActionResult> Create([FromBody] T record, CancellationToken cancellationToken)
     {
         try
         {
-            // Check if payload is valid
             if (!ModelState.IsValid) return BadRequest();
 
-            // Create the new entry
             db.Add(record);
-            await db.SaveChangesAsync();
+            await db.SaveChangesAsync(cancellationToken);
 
-            // respond with the newly created record
             return NoContent();
         }
         catch (Exception ex)
@@ -51,15 +62,18 @@ public abstract class GenericControllerBase<T, TEntityId> : Controller where T :
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(TEntityId id, [FromBody] T record)
+    public virtual async Task<IActionResult> Update(TEntityId id, [FromBody] T record,
+        CancellationToken cancellationToken,
+        [FromQuery] string entitiesToInclude = null)
     {
         try
         {
             if (!ModelState.IsValid) return BadRequest();
 
-            db.Set<T>().Attach(record);
-            await db.SaveChangesAsync();
+            var entityToUpdate = await GetById(id, cancellationToken, entitiesToInclude);
+            db.Set<T>().Update(entityToUpdate);
 
+            await db.SaveChangesAsync(cancellationToken);
             return Ok(record);
         }
         catch (Exception ex)
@@ -69,16 +83,16 @@ public abstract class GenericControllerBase<T, TEntityId> : Controller where T :
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(TEntityId id)
+    public virtual async Task<IActionResult> Delete(TEntityId id, CancellationToken cancellationToken)
     {
         try
         {
             if (!ModelState.IsValid) return BadRequest();
 
-            var record = GetById(id);
+            var record = GetById(id, cancellationToken);
             db.Remove(record);
-            await db.SaveChangesAsync();
-            return Ok("true!");
+            await db.SaveChangesAsync(cancellationToken);
+            return Ok();
         }
         catch (Exception ex)
         {

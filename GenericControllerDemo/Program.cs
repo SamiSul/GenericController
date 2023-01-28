@@ -1,12 +1,16 @@
 using System.Reflection;
+using System.Text.Json.Serialization;
 using GenericControllerDemo.Data;
 using GenericControllerDemo.Tools;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
 // Add services to the container.
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(x =>
+    x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+
 builder.Services.AddDbContext<GenericDbContext>(options => options.UseInMemoryDatabase("GenericControllerDemo"));
 
 var mvcBuilder = builder.Services.AddMvc(options => options.Conventions.Add(new GenericControllerRouteConvention()));
