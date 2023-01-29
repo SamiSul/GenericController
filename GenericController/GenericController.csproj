@@ -4,13 +4,28 @@
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <PackageId>SS.GenericController</PackageId>
+        <PackageIcon>icon.png</PackageIcon>
+        <Version>1.1.0</Version>
+        <Title>Generic Controller</Title>
+        <Description>Add controllers for your entities with ease.</Description>
+        <Authors>Sami Sul</Authors>
+        <RepositoryUrl>https://github.com/SamiSul/GenericController</RepositoryUrl>
     </PropertyGroup>
 
+    <ItemGroup>
+        <None Include="Assets\icon.png" Pack="true" PackagePath="\" />
+    </ItemGroup>
+    
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.9" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.13" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.13" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <Folder Include="Assets" />
     </ItemGroup>
 
 </Project>
