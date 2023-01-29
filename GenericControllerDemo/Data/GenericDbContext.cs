@@ -8,8 +8,10 @@ public class GenericDbContext : DbContext
 {
     public static IModel StaticModel { get; } = BuildStaticModel();
 
-    public DbSet<Something> Somethings { get; set; }
-    public DbSet<SomeOtherThing> OtherThing { get; set; }
+    public DbSet<First> FirstTestModels { get; set; }
+    public DbSet<Second> SecondTestModels { get; set; }
+    public DbSet<Third> ThirdTestModels { get; set; }
+    public DbSet<Unrelated> Unrelateds { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
