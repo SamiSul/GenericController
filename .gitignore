@@ -365,5 +365,6 @@ FodyWeavers.xsd
 # IntelliJ's project specific settings files
 .idea/
 .vscode/
+.fleet/
 # EF Migrations
 Migrations

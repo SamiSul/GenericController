@@ -1,4 +1,4 @@
-namespace GenericController;
+namespace GenericController.Data;
 
 public interface IObjectBase
 {

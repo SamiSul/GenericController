@@ -14,7 +14,7 @@ builder.Services.AddControllers().AddJsonOptions(x =>
 
 builder.Services.AddDbContext<GenericDbContext>(options => options.UseInMemoryDatabase("GenericControllerDemo"));
 
-builder.Services.AddGenericController();
+builder.Services.AddGenericController<GenericDbContext>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
