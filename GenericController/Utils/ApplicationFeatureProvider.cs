@@ -22,7 +22,7 @@ public class GenericTypeControllerFeatureProvider : IApplicationFeatureProvider<
         var types = _assembly.GetExportedTypes();
 
         var customClasses = types.Where(type =>
-            type.IsAssignableTo(typeof(IObjectBase)) && type.Name != nameof(IObjectBase));
+            type.IsAssignableTo(typeof(Data.IObjectBase)) && type.Name != nameof(Data.IObjectBase));
 
         var inheritedController = types.SingleOrDefault(type =>
             type is { IsAbstract: false } &&

@@ -1,4 +1,4 @@
-using GenericController;
+using IObjectBase = GenericController.Data.IObjectBase;
 
 namespace GenericControllerDemo.Models;
 

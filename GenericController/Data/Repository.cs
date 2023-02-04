@@ -1,4 +1,3 @@
-using GenericController.Extensions;
 using GenericController.Utils;
 using Microsoft.EntityFrameworkCore;
 
@@ -53,9 +52,15 @@ public class Repository<TEntity, TEntityId> : IRepository<TEntity, TEntityId> wh
         _context.Remove(entity);
     }
 
-    public void Update(TEntity entity)
+    public async Task Update(TEntity entity, CancellationToken cancellationToken, string  entitiesToInclude = null)
     {
-        _context.Set<TEntity>().Update(entity);
+        var queryableSet = _context.Set<TEntity>().AsQueryable();
+        if (entitiesToInclude is not null)
+        {
+            queryableSet = EntityFrameworkCore<TEntity>.GenerateQueryWithInclude(queryableSet, entitiesToInclude);
+        }
+        
+        _context.Set<TEntity>().Update(await queryableSet.FirstOrDefaultAsync(cancellationToken));
     }
 
     public async Task SaveChangesAsync(CancellationToken cancellationToken)

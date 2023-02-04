@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace GenericController.Data;
 
 public interface IObjectBase
