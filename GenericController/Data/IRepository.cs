@@ -1,6 +1,6 @@
 namespace GenericController.Data;
 
-public interface IRepository<TEntity, TEntityId> where TEntity : class, IObjectBase
+public interface IRepository<TEntity, in TEntityId> where TEntity : class, IObjectBase
 {
     Task<IReadOnlyList<TEntity>> GetAsync(CancellationToken cancellationToken, string? entitiesToInclude);
     Task<TEntity?> GetAsync(TEntityId id, CancellationToken cancellationToken, string? entitiesToInclude);
