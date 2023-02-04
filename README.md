@@ -1,3 +1,5 @@
+> :warning: **This is still in active development and isn't meant to be used in production. Breaking changes might be introduced. Contributions are welcome!** :warning:
+
 # How to use
 Install: `dotnet add package SS.GenericController --version 1.1.0`
 
