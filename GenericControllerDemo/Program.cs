@@ -1,7 +1,5 @@
-using System.Reflection;
 using System.Text.Json.Serialization;
 using GenericController.Extensions;
-using GenericController.Utils;
 using GenericControllerDemo.Data;
 using Microsoft.EntityFrameworkCore;
 

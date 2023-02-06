@@ -32,9 +32,9 @@ public abstract class GenericControllerBase<TEntity, TEntityId> : Controller whe
 
 
     [HttpPost]
-    public virtual async Task<IActionResult> Create([FromBody] TEntity record, CancellationToken cancellationToken)
+    public virtual async Task<IActionResult> Create([FromBody] TEntity entity, CancellationToken cancellationToken)
     {
-        _repository.Add(record);
+        _repository.Add(entity);
         _repository.SaveChangesAsync(cancellationToken);
         return NoContent();
     }
