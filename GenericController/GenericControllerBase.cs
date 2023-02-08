@@ -1,3 +1,4 @@
+using AutoMapper;
 using GenericController.Data;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,12 +9,14 @@ namespace GenericController;
 public abstract class GenericControllerBase<TEntity, TEntityId> : Controller where TEntity : class, Data.IObjectBase
 {
     private readonly IRepository<TEntity, TEntityId> _repository;
+    private readonly IMapper _mapper;
 
-    protected GenericControllerBase(IRepository<TEntity, TEntityId> repository)
+    protected GenericControllerBase(IRepository<TEntity, TEntityId> repository, IMapper mapper)
     {
         _repository = repository;
+        _mapper = mapper;
     }
-    
+
     [HttpGet]
     public virtual async Task<IActionResult> Get(CancellationToken cancellationToken,
         [FromQuery] string entitiesToInclude = null)
